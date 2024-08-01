@@ -1,9 +1,12 @@
-import Navbar from "@/components/navbar/Navbar";
+import Navbar from '@/components/navbar/Navbar';
+import Slider from '@/components/slider/Slider';
 
 export default function Home() {
   return (
-   <div>
-    <Navbar />
-   </div>
+    <div>
+      <Slider >
+        <Navbar />
+      </Slider>
+    </div>
   );
 }
