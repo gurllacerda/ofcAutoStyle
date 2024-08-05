@@ -5,7 +5,7 @@ export default function ContactPage() {
     return (
       <>
       <Navbar />
-      <h1>Contact</h1>
+      <h1 className='bg-black'>Contact</h1>
       </>
     );
   }

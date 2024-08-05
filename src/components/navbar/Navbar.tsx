@@ -49,19 +49,19 @@ export default function Navbar() {
               <div className={`${dropdownOpen ? 'block' : 'hidden'} absolute top-full left-0 z-10 bg-white rounded-lg shadow-lg w-44 mt-2`}>
                 <ul className="py-2 text-sm text-orange-600">
                   <li>
-                    <Link href="#" className="block px-4 py-2 hover:bg-orange-100">Our Menu</Link>
+                    <Link href="/order/menu" className="block px-4 py-2 hover:bg-orange-100">Our Menu</Link>
                   </li>
                   <li>
-                    <Link href="#" className="block px-4 py-2 hover:bg-orange-100">Create your pizza</Link>
+                    <Link href="/order/create" className="block px-4 py-2 hover:bg-orange-100">Create your pizza</Link>
                   </li>
                 </ul>
-                <div className="py-1">
+                {/* <div className="py-1">
                   <Link href="#" className="block px-4 py-2 text-sm hover:bg-orange-100">Sign out</Link>
-                </div>
+                </div> */}
               </div>
             </li>
             <li>
-              <Link href="/orders" className="block py-2 px-3 text-white rounded-md transition duration-300 ease-in-out hover:bg-orange-400">Orders</Link>
+              <Link href="/myOrders" className="block py-2 px-3 text-white rounded-md transition duration-300 ease-in-out hover:bg-orange-400">My orders</Link>
             </li>
             <li>
               <Link href="/contact" className="block py-2 px-3 text-white rounded-md transition duration-300 ease-in-out hover:bg-orange-400">Contact</Link>
