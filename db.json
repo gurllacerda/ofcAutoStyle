@@ -116,5 +116,45 @@
             "name": "Frango",
             "id": "29"
         }
+    ],
+    "pizzas": [
+        {
+            "size": "Big",
+            "pastaType": "Thin",
+            "isGlutenfree": false,
+            "pizzaType": "savory",
+            "chesseType": "mozzarella",
+            "ingredients": [
+                "Mozzarella",
+                "Molho de Tomate"
+            ]
+        }
+    ],
+    
+    "pedidos": [
+        {
+            "id": "1",
+            "pizza": [
+                {
+                    "size": "Big",
+                    "pastaType": "Thin",
+                    "isGlutenfree": false,
+                    "pizzaType": "savory",
+                    "chesseType": "mozzarella",
+                    "ingredients": [
+                        "Mozzarella",
+                        "Molho de Tomate"
+                    ]
+                }
+            ],
+            "sideDish": [
+                {
+                    "potatoFries": true,
+                    "soda": "Coca-cola",
+                    "desert": "Chocolate cake"
+                }
+                
+            ]
+        }
     ]
 }

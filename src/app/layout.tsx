@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import 'antd/dist/reset.css'; // Importando o CSS do Ant Design
 import { Inter } from 'next/font/google';
 import './globals.css';
 
