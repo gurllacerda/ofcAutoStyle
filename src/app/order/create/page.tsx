@@ -6,9 +6,10 @@ import { useState, useEffect } from 'react';
 import { Steps } from 'antd';
 import axios from 'axios';
 import CreatePizzaForm from '@/components/createForm/CreatePizzaForm';
-import { Ingredient } from '@/types';
-
-
+import { Ingredient, PaymentMethod } from '@/types';
+import Order from '@/models/order';
+import { Pizza } from '@/models/pizza';
+import { generateTemporaryId } from '@/utils/idUtils';
 
 
 export default function CreatePage() {
@@ -22,19 +23,12 @@ export default function CreatePage() {
     const [maxReached, setMaxReached] = useState<boolean>(false);
     const [currentStep, setCurrentStep] = useState<number>(0);
     const stepsItens = [
-        {
-            title: 'Create Pizza',
-        },
-        {
-            title: 'In Progress',
-        },
-        {
-            title: 'Review Order',
-        },
-        {
-            title: 'Finished'
-        }
+        { title: 'Create Pizza', },
+        { title: 'In Progress', },
+        { title: 'Review Order', },
+        { title: 'Finished' }
     ];
+    const [order, setOrder] = useState<Order | null>(null);
 
     useEffect(() => {
         const getIngredients = async () => {
@@ -58,34 +52,52 @@ export default function CreatePage() {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        console.log('entrou submit');
-
-        //  try {
-        //     const response = 
-        //  }
+        console.log('Submitting order');
+    
+        if (order) {
+            try {
+                await order.save();
+                console.log('Order saved successfully');
+            } catch (error) {
+                console.error('Failed to save order:', error);
+            }
+        }
 
     };
 
     const handleSave = (event: React.FormEvent) => {
         event.preventDefault();
         console.log('entrou save');
+        if (currentStep === 0) {
+            if (!order) {
+                const pizza = new Pizza(
+                    generateTemporaryId(),
+                    selectedSize,
+                    selectedPasta,
+                    isGlutenFree,
+                    selectedPizza,
+                    selectedCheese,
+                    selectedIngredients
+                );
+
+                //passando um paymentMethod fictíco para que a pizza seja adicionada, porém ao adicionar o payment muda
+                const paymentMethod: PaymentMethod = { type: 'CreditCard' };
+                setOrder(new Order(pizza, paymentMethod));
+            } else {
+                // Atualiza a pizza existente
+                const updatedPizza = new Pizza(
+                    generateTemporaryId(),
+                    selectedSize,
+                    selectedPasta,
+                    isGlutenFree,
+                    selectedPizza,
+                    selectedCheese,
+                    selectedIngredients
+                );
+                order.addPizza(updatedPizza);
+            }
+        }
         setCurrentStep(currentStep + 1);
-        // const generateTempId = () => Math.random().toString(36).slice(2, 11);
-
-        // const tempPedido = {}
-
-
-        // const newPizza = {
-        //     size: selectedSize,
-        //     pasta: selectedPasta,
-        //     isGlutenFree: isGlutenFree,
-        //     type: selectedPizza,
-        //     chesse: selectedCheese,
-        //     ingredients: selectedIngredients,
-        // };
-
-
-
     };
 
 
@@ -100,8 +112,7 @@ export default function CreatePage() {
             <CreatePizzaForm
                 handleSave={handleSave}
                 handleSubmit={handleSubmit}
-                handleIngredientChange={
-                handleIngredientChange}
+                handleIngredientChange={handleIngredientChange}
                 maxReached={maxReached}
                 selectedSize={selectedSize}
                 setSelectedSize={setSelectedSize}

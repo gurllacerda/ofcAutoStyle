@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Checkbox, Radio } from 'antd';
-import { Ingredient, Pizza } from '@/types';
+import { Ingredient } from '@/types';
+import { Pizza } from '@/models/pizza';
 
 
 interface CreateFormProps {
@@ -53,8 +54,7 @@ export default function CreatePizzaForm({
                     id="size"
                     className="bg-white border border-orange-600 text-orange-600 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
                     value={selectedSize}
-                    onChange={(e) => setSelectedSize(e.target.value as Pizza['size'])}
-                >
+                    onChange={(e) => setSelectedSize(e.target.value as Pizza['size'])}>
                     <option value="Small">Small</option>
                     <option value="Medium">Medium</option>
                     <option value="Big">Big</option>
