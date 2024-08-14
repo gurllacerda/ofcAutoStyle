@@ -1,5 +1,6 @@
-import { PaymentMethod, SideDishes, } from '@/types';
+import { PaymentMethod } from '@/types';
 import { Pizza } from './pizza';
+import { SideDishes } from './sideDishes';
 import axios from 'axios';
 
 export default class Order {
@@ -20,11 +21,16 @@ export default class Order {
         this.pizza = pizza;
     } 
 
+    addSideDishes (sideDishes: SideDishes[]): void {
+        this.sideDishes = sideDishes;
+    }
+
 
     public async save(): Promise<void>{
         try{
             const orderData = {
-                pizza: this.pizza 
+                pizza: this.pizza,
+                sideDishes: this.sideDishes
             };
 
             const response = await axios.post('http://localhost:3333/orders', orderData);

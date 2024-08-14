@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Checkbox, Radio } from 'antd';
+import {   Checkbox, Radio } from 'antd';
 import { Ingredient } from '@/types';
 import { Pizza } from '@/models/pizza';
 
@@ -40,8 +40,8 @@ export default function CreatePizzaForm({
     maxReached,
     selectedIngredients,
     handleIngredientChange,
-    currentStep,
-    handleSave,
+    // currentStep,
+    // handleSave
 }: CreateFormProps) {
     return (
         <form className="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg border border-orange-200" onSubmit={handleSubmit}>
@@ -118,31 +118,6 @@ export default function CreatePizzaForm({
                     />
                 </div>
             </div>
-
-            {/* Submit Button */}
-            {currentStep === 3 ? (
-                <div className="text-center">
-                    <Button
-                        type="primary"
-                        onSubmit={handleSubmit}
-                        htmlType="submit"
-                        className="bg-orange-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    >
-                        Create Pizza
-                    </Button>
-                </div>
-            ) : (
-                <div className="text-center">
-                    <Button
-                        type="primary"
-                        onClick={handleSave}
-                        htmlType="submit"
-                        className="bg-orange-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    >
-                        Save
-                    </Button>
-                </div>
-            )}
         </form>
     );
 }
