@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Card } from 'antd';
 import Image from 'next/image';
 import { SideDishes } from '@/models/sideDishes';
@@ -6,9 +6,13 @@ import { SideDishes } from '@/models/sideDishes';
 const { Meta } = Card;
 
 interface SideDishesFormProps {
-    handleAddIngredient: (newSideDish: SideDishes) => void;
+    handleAddSide: (newSideDish: SideDishes) => void;
+    handleDeleteSide: (id: string) => void;
+    maxSides: boolean;
+    sides: SideDishes[];
 }
 
+//função some retorna true se pelo menos um das verificações da lista foi verdadeira
 // Dados dinâmicos para os acompanhamentos
 const sideDishesData = [
     { id: '1', name: 'Small fries', image: '/IMG/batataPequena.jpg' },
@@ -19,7 +23,12 @@ const sideDishesData = [
     { id: '6', name: 'Water Bottle', image: '/IMG/waterBottle.jpg' },
 ];
 
-export default function SideDishesForm({ handleAddIngredient }: SideDishesFormProps) {
+export default function SideDishesForm({ handleAddSide, handleDeleteSide, maxSides, sides }: SideDishesFormProps) {
+    useEffect(() => {
+        console.log(sides);
+    }, [sides]);
+
+
     return (
         <div className="flex flex-wrap gap-4 p-4 bg-white">
             {sideDishesData.map(dish => (
@@ -30,13 +39,13 @@ export default function SideDishesForm({ handleAddIngredient }: SideDishesFormPr
                     cover={
                         <div className="relative w-full h-40">
                             <Image
-                            alt={dish.name}
-                            src={dish.image}
-                            fill
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            style={{ objectFit: 'cover' }} // Use style instead of objectFit prop
-                            className="rounded-t-lg"
-                        />
+                                alt={dish.name}
+                                src={dish.image}
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                style={{ objectFit: 'cover' }}
+                                className="rounded-t-lg"
+                            />
                         </div>
                     }
                 >
@@ -44,13 +53,26 @@ export default function SideDishesForm({ handleAddIngredient }: SideDishesFormPr
                         title={dish.name}
                         className="text-orange-600 font-semibold"
                     />
-                    <Button
-                        type='primary'
-                        className="mt-4 bg-orange-500 border-orange-500 hover:bg-orange-600 hover:border-orange-600 text-white"
-                        onClick={() => handleAddIngredient(new SideDishes(dish.id, dish.name))}
-                    >
-                        Add
-                    </Button>
+
+                    <div className="flex gap-4 mt-4">
+                        <Button
+                            disabled={maxSides || sides.some(side => side.id === dish.id)}
+                            type='primary'
+                            className="bg-orange-500 border border-transparent hover:bg-orange-600 text-white"
+                            onClick={() => handleAddSide(new SideDishes(dish.id, dish.name))}
+                        >
+                            Add
+                        </Button>
+                        <Button
+                            disabled={!sides.some(side => side.id === dish.id)}
+                            type='primary'
+                            className="bg-red-500 border border-transparent hover:bg-red-600 text-white"
+                            onClick={() => handleDeleteSide(dish.id)}
+                        >
+                            Delete
+                        </Button>
+                    </div>
+
                 </Card>
             ))}
         </div>

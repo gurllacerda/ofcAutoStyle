@@ -1,4 +1,4 @@
-import { PaymentMethod } from '@/types';
+import { PaymentMethod } from './paymentMethod';
 import { Pizza } from './pizza';
 import { SideDishes } from './sideDishes';
 import axios from 'axios';
@@ -24,6 +24,12 @@ export default class Order {
     addSideDishes (sideDishes: SideDishes[]): void {
         this.sideDishes = sideDishes;
     }
+
+    addPaymentMethod (paymentMethod: PaymentMethod): void {
+        this.paymentMethod = paymentMethod;
+    }
+
+
 
 
     public async save(): Promise<void>{

@@ -6,12 +6,14 @@ import { useState, useEffect } from 'react';
 import { Button, Steps } from 'antd';
 import axios from 'axios';
 import CreatePizzaForm from '@/components/createForm/CreatePizzaForm';
-import { Ingredient, PaymentMethod } from '@/types';
+import { Ingredient } from '@/types';
 import Order from '@/models/order';
 import { Pizza } from '@/models/pizza';
 import { generateTemporaryId } from '@/utils/idUtils';
 import SideDishesForm from '@/components/sideDishesForm/SideDishesForm';
 import { SideDishes } from '@/models/sideDishes';
+import { PaymentMethod } from '@/models/paymentMethod';
+
 
 
 export default function CreatePage() {
@@ -21,9 +23,10 @@ export default function CreatePage() {
     const [selectedPizza, setSelectedPizza] = React.useState<'Sweet' | 'Savory'>('Sweet');
     const [selectedCheese, setSelectedCheese] = React.useState<'Mozzarella' | 'Buffalo mozzarella'>('Mozzarella');
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
-    const [acompanhamentos, setacompanhamentos] = useState<SideDishes[]>([]);
+    const [sides, setSides] = useState<SideDishes[]>([]);
     const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
     const [maxReached, setMaxReached] = useState<boolean>(false);
+    const [maxSides, setMaxSides] = useState<boolean>(false);
     const [currentStep, setCurrentStep] = useState<number>(0);
     const stepsItens = [
         { title: 'Create Pizza', },
@@ -102,17 +105,26 @@ export default function CreatePage() {
         }
         else if (currentStep === 1) {
             if (order) {
-                order?.addSideDishes(acompanhamentos);
+                order?.addSideDishes(sides);
             }
         }
         setCurrentStep(currentStep + 1);
     };
 
-    const handleAddIngredient = (newSideDish: SideDishes) => {
-        console.log([...acompanhamentos, newSideDish]);
-        setacompanhamentos([...acompanhamentos, newSideDish]);
+    const handleAddSide = (newSideDish: SideDishes) => {
+        if (!maxSides) {
+            setSides([...sides, newSideDish]);
+            if (sides.length >= 1) {
+                setMaxSides(true);
+            }
+        }
     };
 
+    const handleDeleteSide = (id: string) => {
+        const newSides = sides.filter((side) => side.id !== id);
+        setSides(newSides);
+        setMaxSides(newSides.length >= 2);
+    };
 
     return (
         <>
@@ -146,7 +158,12 @@ export default function CreatePage() {
             }
 
             {currentStep === 1 &&
-                <SideDishesForm handleAddIngredient={handleAddIngredient} />
+                <SideDishesForm 
+                handleAddSide={handleAddSide} 
+                handleDeleteSide={handleDeleteSide} 
+                maxSides={maxSides}
+                sides={sides}
+                />
 
             }
 
