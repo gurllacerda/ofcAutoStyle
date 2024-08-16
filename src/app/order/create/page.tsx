@@ -13,6 +13,7 @@ import { generateTemporaryId } from '@/utils/idUtils';
 import SideDishesForm from '@/components/sideDishesForm/SideDishesForm';
 import { SideDishes } from '@/models/sideDishes';
 import { PaymentMethod } from '@/models/paymentMethod';
+import OrderSummary from '@/components/orderSummary/OrderSummary';
 
 
 
@@ -56,8 +57,8 @@ export default function CreatePage() {
         setMaxReached(checkedValues.length >= 4);
     };
 
-    const handleSubmit = async () => {
-        // event.preventDefault();
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
         console.log('Submitting order');
 
         if (order) {
@@ -108,6 +109,7 @@ export default function CreatePage() {
                 order?.addSideDishes(sides);
             }
         }
+        console.log(order);
         setCurrentStep(currentStep + 1);
     };
 
@@ -124,6 +126,10 @@ export default function CreatePage() {
         const newSides = sides.filter((side) => side.id !== id);
         setSides(newSides);
         setMaxSides(newSides.length >= 2);
+    };
+
+    const handleEditOrder = () => {
+        console.log('enum');
     };
 
     return (
@@ -165,6 +171,10 @@ export default function CreatePage() {
                 sides={sides}
                 />
 
+            }
+
+            {currentStep === 3 && order &&
+                <OrderSummary order={order} onEdit={handleEditOrder}/>
             }
 
             <form onSubmit={handleSubmit}>

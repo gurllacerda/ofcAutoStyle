@@ -16,6 +16,18 @@ export default class Order {
         }
     }
 
+    public getPizza(): Pizza | null {
+        return this.pizza;
+      }
+    
+      public getSideDishes(): SideDishes[] {
+        return this.sideDishes;
+      }
+    
+      public getPaymentMethod(): PaymentMethod | null {
+        return this.paymentMethod;
+      }
+
     
     addPizza (pizza: Pizza): void{
         this.pizza = pizza;

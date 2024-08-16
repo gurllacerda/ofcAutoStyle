@@ -218,6 +218,33 @@
           "name": "Home fries"
         }
       ]
+    },
+    {
+      "id": "3a18",
+      "pizza": {
+        "id": "temp_gl23zz4su",
+        "size": "Small",
+        "pasta": "Thin",
+        "isGlutenFree": false,
+        "type": "Sweet",
+        "cheese": "Mozzarella",
+        "ingredients": [
+          "Mozzarella",
+          "Cogumelos Paris",
+          "Ovo (2 ovo)",
+          "Queijo Mini Mozzarella"
+        ]
+      },
+      "sideDishes": [
+        {
+          "id": "2",
+          "name": "Large fries"
+        },
+        {
+          "id": "5",
+          "name": "Orange Juice"
+        }
+      ]
     }
   ]
 }
