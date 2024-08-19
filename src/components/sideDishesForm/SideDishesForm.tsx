@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Card } from 'antd';
 import Image from 'next/image';
 import { SideDishes } from '@/models/sideDishes';
@@ -24,9 +24,7 @@ const sideDishesData = [
 ];
 
 export default function SideDishesForm({ handleAddSide, handleDeleteSide, maxSides, sides }: SideDishesFormProps) {
-    useEffect(() => {
-        console.log(sides);
-    }, [sides]);
+    
 
 
     return (

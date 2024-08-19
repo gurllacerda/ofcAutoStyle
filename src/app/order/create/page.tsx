@@ -3,7 +3,7 @@
 import React from 'react';
 import Navbar from '@/components/navbar/Navbar';
 import { useState, useEffect } from 'react';
-import { Button, Steps } from 'antd';
+import { Button, RadioChangeEvent, Steps } from 'antd';
 import axios from 'axios';
 import CreatePizzaForm from '@/components/createForm/CreatePizzaForm';
 import { Ingredient } from '@/types';
@@ -14,6 +14,7 @@ import SideDishesForm from '@/components/sideDishesForm/SideDishesForm';
 import { SideDishes } from '@/models/sideDishes';
 import { PaymentMethod } from '@/models/paymentMethod';
 import OrderSummary from '@/components/orderSummary/OrderSummary';
+import PaymentForm from '@/components/paymentForm/paymentForm';
 
 
 
@@ -25,9 +26,11 @@ export default function CreatePage() {
     const [selectedCheese, setSelectedCheese] = React.useState<'Mozzarella' | 'Buffalo mozzarella'>('Mozzarella');
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
     const [sides, setSides] = useState<SideDishes[]>([]);
+    const [payment, setPayment] = React.useState<'CreditCard' | 'DebitCard' | 'PayPal' | 'Cash'>('CreditCard');
     const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
     const [maxReached, setMaxReached] = useState<boolean>(false);
     const [maxSides, setMaxSides] = useState<boolean>(false);
+    const [isCard, setIsCard] = useState<boolean>(false);
     const [currentStep, setCurrentStep] = useState<number>(0);
     const stepsItens = [
         { title: 'Create Pizza', },
@@ -36,6 +39,11 @@ export default function CreatePage() {
         { title: 'Finished' }
     ];
     const [order, setOrder] = useState<Order | null>(null);
+    const [cardDetails, setCardDetails] = useState({
+        cardNumber: '',
+        cardExpiryDate: '',
+        cardCVV: ''
+    });
 
     useEffect(() => {
         const getIngredients = async () => {
@@ -53,7 +61,6 @@ export default function CreatePage() {
 
     const handleIngredientChange = (checkedValues: string[]) => {
         setSelectedIngredients(checkedValues);
-        console.log(checkedValues);
         setMaxReached(checkedValues.length >= 4);
     };
 
@@ -108,7 +115,13 @@ export default function CreatePage() {
             if (order) {
                 order?.addSideDishes(sides);
             }
+        } else if (currentStep === 2) {
+            if (order) {
+                const paymentMethod: PaymentMethod = { type: payment, details: cardDetails };
+                order?.addPaymentMethod(paymentMethod);
+            }
         }
+
         console.log(order);
         setCurrentStep(currentStep + 1);
     };
@@ -132,6 +145,19 @@ export default function CreatePage() {
         console.log('enum');
     };
 
+    const handlePaymentChange = (e: RadioChangeEvent) => {
+        const pagamento = e.target.value;
+        if ((pagamento !== 'PayPal') && (pagamento !== 'Cash')) {
+            setIsCard(true);
+        } else {
+            setIsCard(false);
+        }
+        setPayment(pagamento);
+    };
+
+    const handleGoBack = () => {
+        setCurrentStep(currentStep - 1);
+    };
     return (
         <>
 
@@ -141,6 +167,7 @@ export default function CreatePage() {
                 current={currentStep}
                 items={stepsItens}
             />
+            
             {currentStep === 0 &&
                 <CreatePizzaForm
                     handleSave={handleSave}
@@ -164,17 +191,24 @@ export default function CreatePage() {
             }
 
             {currentStep === 1 &&
-                <SideDishesForm 
-                handleAddSide={handleAddSide} 
-                handleDeleteSide={handleDeleteSide} 
-                maxSides={maxSides}
-                sides={sides}
+                <SideDishesForm
+                    handleAddSide={handleAddSide}
+                    handleDeleteSide={handleDeleteSide}
+                    maxSides={maxSides}
+                    sides={sides}
                 />
 
             }
+            {currentStep === 2 &&
+                <PaymentForm
+                    setCardDetails={setCardDetails}
+                    handlePaymentChange={handlePaymentChange}
+                    isCard={isCard} />
 
+            }
+            
             {currentStep === 3 && order &&
-                <OrderSummary order={order} onEdit={handleEditOrder}/>
+                <OrderSummary order={order} onEdit={handleEditOrder} />
             }
 
             <form onSubmit={handleSubmit}>
@@ -192,23 +226,28 @@ export default function CreatePage() {
                         </Button>
                     </div>
                 ) : (
-                    <div className="text-center">
+                    <div className="text-center  space-x-2">
+                        {currentStep !== 0 &&
+                            <Button
+                                type="primary"
+                                onClick={handleGoBack}
+                                htmlType="submit"
+                                className="bg-orange-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            >
+                                Back
+                            </Button>
+                        }
                         <Button
                             type="primary"
                             onClick={handleSave}
                             htmlType="submit"
                             className="bg-orange-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
                         >
-                            Save
+                            Next
                         </Button>
                     </div>
                 )}
-
             </form>
-
-
-
-
         </>
     );
 }

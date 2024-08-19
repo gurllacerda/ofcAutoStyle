@@ -27,25 +27,33 @@ body {
 
 /* Adicione as customizações específicas do componente Steps aqui */
 .custom-steps .ant-steps-item-title {
-  @apply text-orange-600; /* Cor laranja para o texto dos títulos dos passos */
+  @apply text-orange-600 font-semibold; /* Texto em laranja e negrito */
 }
 
 .custom-steps .ant-steps-item-process .ant-steps-item-icon {
-  @apply bg-orange-600 border-orange-600; /* Cor laranja para o ícone de progresso */
+  @apply bg-orange-600 border-orange-600 text-white; /* Ícone laranja com texto branco */
 }
 
 .custom-steps .ant-steps-item-finish .ant-steps-item-icon {
-  @apply bg-orange-600 border-orange-600; /* Cor laranja para o fundo do ícone de passo concluído */
+  @apply bg-orange-600 border-orange-600 text-white; /* Ícone laranja com texto branco para passos concluídos */
 }
 
 .custom-steps .ant-steps-item-wait .ant-steps-item-icon {
-  @apply bg-white border-orange-600; /* Cor branca para o fundo do ícone de passo não iniciado */
+  @apply bg-white border-orange-600 text-orange-600; /* Ícone branco com borda laranja para passos não iniciados */
 }
 
 .custom-steps .ant-steps-item-icon {
-  @apply border rounded-full; /* Adiciona borda arredondada */
+  @apply border rounded-full; /* Adiciona borda arredondada ao ícone */
 }
 
 .custom-steps .ant-steps-item-title {
   @apply font-bold; /* Fonte em negrito */
+}
+
+.custom-steps .ant-steps-item-icon {
+  @apply w-8 h-8; /* Define o tamanho dos ícones */
+}
+
+.custom-steps .ant-steps-item {
+  @apply mb-4; /* Espaço entre os itens */
 }

@@ -133,43 +133,6 @@
   ],
   "orders": [
     {
-      "id": "0f65"
-    },
-    {
-      "id": "c4e9",
-      "pizza": {
-        "id": "temp_7ahyxsww5",
-        "size": "Small",
-        "pasta": "Thick",
-        "isGlutenFree": true,
-        "type": "Sweet",
-        "cheese": "Mozzarella",
-        "ingredients": [
-          "Mozzarella",
-          "Molho de Tomate",
-          "Fiambre",
-          "Bacon"
-        ]
-      }
-    },
-    {
-      "id": "bb29",
-      "pizza": {
-        "id": "temp_ao2j9t81y",
-        "size": "Small",
-        "pasta": "Thin",
-        "isGlutenFree": false,
-        "type": "Sweet",
-        "cheese": "Mozzarella",
-        "ingredients": [
-          "Mozzarella",
-          "Manjericão",
-          "Beringela",
-          "Espinafres"
-        ]
-      }
-    },
-    {
       "id": "a084",
       "pizza": {
         "id": "temp_bi0f9wpka",
@@ -197,42 +160,19 @@
       ]
     },
     {
-      "id": "9eaa",
+      "id": "87bb",
       "pizza": {
-        "id": "temp_ezgvkmvco",
+        "id": "temp_dakt5nzrk",
         "size": "Small",
-        "pasta": "Thin",
-        "isGlutenFree": false,
+        "pasta": "Thick",
+        "isGlutenFree": true,
         "type": "Savory",
-        "cheese": "Buffalo mozzarella",
-        "ingredients": [
-          "Bacon",
-          "Manjericão",
-          "Cogumelos Paris",
-          "Queijo Parmesão"
-        ]
-      },
-      "sideDishes": [
-        {
-          "id": "3",
-          "name": "Home fries"
-        }
-      ]
-    },
-    {
-      "id": "3a18",
-      "pizza": {
-        "id": "temp_gl23zz4su",
-        "size": "Small",
-        "pasta": "Thin",
-        "isGlutenFree": false,
-        "type": "Sweet",
         "cheese": "Mozzarella",
         "ingredients": [
-          "Mozzarella",
+          "Molho de Tomate",
           "Cogumelos Paris",
-          "Ovo (2 ovo)",
-          "Queijo Mini Mozzarella"
+          "Brócolos",
+          "Tomate Cherry"
         ]
       },
       "sideDishes": [
@@ -241,8 +181,8 @@
           "name": "Large fries"
         },
         {
-          "id": "5",
-          "name": "Orange Juice"
+          "id": "3",
+          "name": "Home fries"
         }
       ]
     }
