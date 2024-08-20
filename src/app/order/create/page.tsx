@@ -21,14 +21,13 @@ import PaymentForm from '@/components/paymentForm/paymentForm';
 export default function CreatePage() {
     const [selectedSize, setSelectedSize] = React.useState<'Small' | 'Medium' | 'Big'>('Small');
     const [selectedPasta, setSelectedPasta] = React.useState<'Thin' | 'Thick'>('Thin');
-    const [isGlutenFree, setIsGlutenFree] = useState<boolean>(false);
+    const [isGlutenFree, setIsGlutenFree] = useState<boolean>(true);
     const [selectedPizza, setSelectedPizza] = React.useState<'Sweet' | 'Savory'>('Sweet');
     const [selectedCheese, setSelectedCheese] = React.useState<'Mozzarella' | 'Buffalo mozzarella'>('Mozzarella');
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
     const [sides, setSides] = useState<SideDishes[]>([]);
     const [payment, setPayment] = React.useState<'CreditCard' | 'DebitCard' | 'PayPal' | 'Cash'>('CreditCard');
     const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
-    const [maxReached, setMaxReached] = useState<boolean>(false);
     const [maxSides, setMaxSides] = useState<boolean>(false);
     const [isCard, setIsCard] = useState<boolean>(false);
     const [currentStep, setCurrentStep] = useState<number>(0);
@@ -61,7 +60,6 @@ export default function CreatePage() {
 
     const handleIngredientChange = (checkedValues: string[]) => {
         setSelectedIngredients(checkedValues);
-        setMaxReached(checkedValues.length >= 4);
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -141,8 +139,19 @@ export default function CreatePage() {
         setMaxSides(newSides.length >= 2);
     };
 
-    const handleEditOrder = () => {
-        console.log('enum');
+    const handleEditOrder = (section: string) => {
+        switch(section){
+            case 'pizza':
+                setCurrentStep(0);
+                break;
+            case 'sideDishes':
+                setCurrentStep(1);
+                break;
+            case 'paymentMethod':
+                setCurrentStep(2);
+                break;
+        }
+        
     };
 
     const handlePaymentChange = (e: RadioChangeEvent) => {
@@ -173,7 +182,6 @@ export default function CreatePage() {
                     handleSave={handleSave}
                     handleSubmit={handleSubmit}
                     handleIngredientChange={handleIngredientChange}
-                    maxReached={maxReached}
                     selectedSize={selectedSize}
                     setSelectedSize={setSelectedSize}
                     selectedPasta={selectedPasta}
@@ -203,7 +211,10 @@ export default function CreatePage() {
                 <PaymentForm
                     setCardDetails={setCardDetails}
                     handlePaymentChange={handlePaymentChange}
-                    isCard={isCard} />
+                    isCard={isCard} 
+                    payment={payment}
+                    cardDetails={cardDetails}
+                    />
 
             }
             

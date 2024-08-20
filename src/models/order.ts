@@ -48,7 +48,8 @@ export default class Order {
         try{
             const orderData = {
                 pizza: this.pizza,
-                sideDishes: this.sideDishes
+                sideDishes: this.sideDishes,
+                paymentMethod: this.paymentMethod
             };
 
             const response = await axios.post('http://localhost:3333/orders', orderData);
