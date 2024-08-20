@@ -1,8 +1,8 @@
 import React from 'react';
-import {   Checkbox, Radio } from 'antd';
+import { Radio, Select } from 'antd';
 import { Ingredient } from '@/types';
 import { Pizza } from '@/models/pizza';
-
+const { Option } = Select;
 
 interface CreateFormProps {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -17,7 +17,6 @@ interface CreateFormProps {
     selectedCheese: Pizza['cheese'];
     setSelectedCheese: (cheese: Pizza['cheese']) => void;
     ingredients: Ingredient[];
-    maxReached: boolean;
     selectedIngredients: string[];
     handleIngredientChange: (checkedValues: string[]) => void;
     currentStep: number;
@@ -37,7 +36,6 @@ export default function CreatePizzaForm({
     selectedCheese,
     setSelectedCheese,
     ingredients,
-    maxReached,
     selectedIngredients,
     handleIngredientChange,
     // currentStep,
@@ -105,18 +103,21 @@ export default function CreatePizzaForm({
                 <label htmlFor="additional-ingredients" className="block mb-2 text-sm font-medium text-orange-600">
                     Select up to 4 ingredients
                 </label>
-                <div className="w-full">
-                    <Checkbox.Group
-                        options={ingredients.map((ingredient) => ({
-                            label: ingredient.name,
-                            value: ingredient.name,
-                            disabled: maxReached && !selectedIngredients.includes(ingredient.name),
-                        }))}
-                        value={selectedIngredients}
-                        onChange={handleIngredientChange}
-                        className="flex flex-wrap gap-4"
-                    />
-                </div>
+                <Select
+                    mode="multiple"
+                    value={selectedIngredients}
+                    onChange={handleIngredientChange}
+                    maxCount={4}
+                    // disabled={maxReached && selectedIngredients.length >= 4}
+                    className="w-full"
+                >
+                    {ingredients.map((ingredient) => (
+                        <Option key={ingredient.name} value={ingredient.name}>
+                            {ingredient.name}
+                        </Option>
+                    ))}
+                </Select>
+                {selectedIngredients.length >= 4 && <p className="text-red-500 mt-2">You can select up to 4 ingredients.</p>}
             </div>
         </form>
     );
