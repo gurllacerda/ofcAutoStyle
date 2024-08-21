@@ -4,31 +4,38 @@ import { SideDishes } from './sideDishes';
 import axios from 'axios';
 
 export default class Order {
-    private pizza: Pizza | null = null;
+    private id?: string;
+    private pizza: Pizza ;
     private sideDishes: SideDishes[] = [];
-    private paymentMethod: PaymentMethod | null = null;
+    private paymentMethod: PaymentMethod ;
 
-    public constructor ( pizza: Pizza, paymentMethod: PaymentMethod, sideDishes?: SideDishes[]){
+    public constructor ( pizza: Pizza, paymentMethod: PaymentMethod, sideDishes?: SideDishes[], id?: string) {
         this.pizza = pizza;
         this.paymentMethod = paymentMethod;
         if(sideDishes) {
             this.sideDishes = sideDishes;
         }
+        if(id) {
+            this.id = id;
+        }
     }
 
-    public getPizza(): Pizza | null {
-        return this.pizza;
-      }
-    
-      public getSideDishes(): SideDishes[] {
-        return this.sideDishes;
-      }
-    
-      public getPaymentMethod(): PaymentMethod | null {
-        return this.paymentMethod;
-      }
+    public getId(): string | undefined {
+        return this.id;
+    }
 
-    
+    public getPizza(): Pizza  {
+        return this.pizza;
+    }
+
+    public getSideDishes(): SideDishes[] {
+        return this.sideDishes;
+    }
+
+    public getPaymentMethod(): PaymentMethod  {
+        return this.paymentMethod;
+    }
+
     addPizza (pizza: Pizza): void{
         this.pizza = pizza;
     } 
@@ -41,9 +48,6 @@ export default class Order {
         this.paymentMethod = paymentMethod;
     }
 
-
-
-
     public async save(): Promise<void>{
         try{
             const orderData = {
@@ -54,8 +58,11 @@ export default class Order {
 
             const response = await axios.post('http://localhost:3333/orders', orderData);
             console.log('Order Saved!', response.data);
+
+            // Atualiza a instância com o ID retornado
+            this.id = response.data.id;
         } catch (error){
-            console.log('Error saving order!');
+            console.log('Error saving order!', error);
         }
     }
 }

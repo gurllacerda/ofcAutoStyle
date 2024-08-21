@@ -15,6 +15,8 @@ import { SideDishes } from '@/models/sideDishes';
 import { PaymentMethod } from '@/models/paymentMethod';
 import OrderSummary from '@/components/orderSummary/OrderSummary';
 import PaymentForm from '@/components/paymentForm/paymentForm';
+import { useRouter } from 'next/navigation';
+// import Link from 'next/link';
 
 
 
@@ -26,7 +28,7 @@ export default function CreatePage() {
     const [selectedCheese, setSelectedCheese] = React.useState<'Mozzarella' | 'Buffalo mozzarella'>('Mozzarella');
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
     const [sides, setSides] = useState<SideDishes[]>([]);
-    const [payment, setPayment] = React.useState<'CreditCard' | 'DebitCard' | 'PayPal' | 'Cash'>('CreditCard');
+    const [payment, setPayment] = React.useState<'CreditCard' | 'DebitCard' | 'PayPal' | 'Cash'>('Cash');
     const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
     const [maxSides, setMaxSides] = useState<boolean>(false);
     const [isCard, setIsCard] = useState<boolean>(false);
@@ -43,6 +45,7 @@ export default function CreatePage() {
         cardExpiryDate: '',
         cardCVV: ''
     });
+    const router = useRouter();
 
     useEffect(() => {
         const getIngredients = async () => {
@@ -70,6 +73,7 @@ export default function CreatePage() {
             try {
                 await order.save();
                 console.log('Order saved successfully');
+                router.push('/');
             } catch (error) {
                 console.error('Failed to save order:', error);
             }
@@ -229,10 +233,12 @@ export default function CreatePage() {
                     <div className="text-center">
                         <Button
                             type="primary"
-                            onSubmit={handleSubmit}
+                            // onSubmit={handleSubmit}
                             htmlType="submit"
                             className="bg-orange-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            // href="/"
                         >
+                            
                             Create Pizza
                         </Button>
                     </div>
