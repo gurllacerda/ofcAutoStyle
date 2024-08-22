@@ -74,7 +74,7 @@ export default function OrdersPage() {
                   type="link"
                   icon={<FormOutlined />}
                   className="text-orange-600 hover:text-orange-800"
-                  href={`/Orders/create/${order.getId()}`} // Use the correct path to edit
+                  href={`/order/${order.getId()}`} 
                 >
                   Edit
                 </Button>,

@@ -65,4 +65,23 @@ export default class Order {
             console.log('Error saving order!', error);
         }
     }
+
+    public async update(): Promise<void> {
+        if (!this.id) {
+            throw new Error('Cannot update an order without an ID.');
+        }
+
+        try {
+            const orderData = {
+                pizza: this.pizza,
+                sideDishes: this.sideDishes,
+                paymentMethod: this.paymentMethod
+            };
+
+            const response = await axios.put(`http://localhost:3333/orders/${this.id}`, orderData);
+            console.log('Order Updated!', response.data);
+        } catch (error) {
+            console.error('Failed to update order:', error);
+        }
+    }
 }
