@@ -302,6 +302,73 @@
         "details": {}
       },
       "id": "276c"
+    },
+    {
+      "pizza": {
+        "id": "temp_4vd3zfido",
+        "size": "Big",
+        "pasta": "Thick",
+        "isGlutenFree": true,
+        "type": "Sweet",
+        "cheese": "Buffalo mozzarella",
+        "ingredients": [
+          "Frango",
+          "Tomate Seco",
+          "Camarão"
+        ]
+      },
+      "sideDishes": [
+        {
+          "id": "2",
+          "name": "Large fries"
+        },
+        {
+          "id": "3",
+          "name": "Home fries"
+        }
+      ],
+      "paymentMethod": {
+        "type": "PayPal",
+        "details": {}
+      },
+      "id": "94d8"
+    }
+  ],
+  "defaultOrders": [
+    {
+      "id": "1",
+      "name":"Caprese Mania",
+      "pizza": {
+        "size": "Small",
+        "pasta": "Thick",
+        "isGlutenFree": false,
+        "type": "Savory",
+        "cheese": "Mozzarella",
+        "ingredients": [
+          "Frango",
+          "Tomate Seco",
+          "Salmão fumado",
+          "Atum"
+        ]
+      },
+      "sideDishes": [
+        {
+          "id": "6",
+          "name": "Water Bottle"
+        },
+        {
+          "id": "5",
+          "name": "Orange Juice"
+        }
+      ],
+      "paymentMethod": {
+        "type": "Cash",
+        "details": {
+          "cardNumber": "",
+          "cardExpiryDate": "",
+          "cardCVV": ""
+        }
+      }
     }
   ]
 }

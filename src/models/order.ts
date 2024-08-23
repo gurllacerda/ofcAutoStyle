@@ -5,11 +5,12 @@ import axios from 'axios';
 
 export default class Order {
     private id?: string;
+    private name?: string;
     private pizza: Pizza ;
     private sideDishes: SideDishes[] = [];
     private paymentMethod: PaymentMethod ;
 
-    public constructor ( pizza: Pizza, paymentMethod: PaymentMethod, sideDishes?: SideDishes[], id?: string) {
+    public constructor ( pizza: Pizza, paymentMethod: PaymentMethod, sideDishes?: SideDishes[], id?: string, name?: string) {
         this.pizza = pizza;
         this.paymentMethod = paymentMethod;
         if(sideDishes) {
@@ -18,10 +19,17 @@ export default class Order {
         if(id) {
             this.id = id;
         }
+        if(name){
+            this.name = name;
+        }
     }
 
     public getId(): string | undefined {
         return this.id;
+    }
+
+    public getName(): string | undefined {
+        return this.name;
     }
 
     public getPizza(): Pizza  {

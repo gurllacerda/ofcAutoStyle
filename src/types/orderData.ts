@@ -1,5 +1,6 @@
 export interface OrderData {
   id: string;
+  name?: string;
   pizza: {
       id: string;
       size: 'Small' | 'Medium' | 'Big';
