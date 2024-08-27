@@ -8,6 +8,7 @@ import { SideDishes } from '@/models/sideDishes';
 import { Pizza } from '@/models/pizza';
 import { generateTemporaryId } from '@/utils/idUtils';
 import { RadioChangeEvent } from 'antd';
+import { DefaultOrder } from '@/models/defaultOrder';
 
 export function useOrderForm(initialOrder?: Order) {
     // Estado e lógica do hook
@@ -23,7 +24,7 @@ export function useOrderForm(initialOrder?: Order) {
     const [maxSides, setMaxSides] = useState<boolean>(false);
     const [isCard, setIsCard] = useState<boolean>(false);
     const [currentStep, setCurrentStep] = useState<number>(0);
-    const [order, setOrder] = useState<Order | null>(initialOrder || null);
+    const [order, setOrder] = useState<Order | null | DefaultOrder>(initialOrder || null);
     const [cardDetails, setCardDetails] = useState<{
         cardNumber?: string;
         cardExpiryDate?: string;
@@ -61,7 +62,6 @@ export function useOrderForm(initialOrder?: Order) {
         }, [initialOrder]);
        
         useEffect(() => {
-            
                 if(order){
                     console.log('tem order');
                     const pizza = order.getPizza();
@@ -93,8 +93,10 @@ export function useOrderForm(initialOrder?: Order) {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         console.log('Submitting order');
+        console.log(order);
 
         if (order) {
+            console.log('entrou para salvar');
             try {
                 if (order.getId()) {
                     await order.update();
@@ -107,6 +109,8 @@ export function useOrderForm(initialOrder?: Order) {
             } catch (error) {
                 console.error('Failed to save or update order:', error);
             }
+        }else {
+            console.log('não é order');
         }
 
     };

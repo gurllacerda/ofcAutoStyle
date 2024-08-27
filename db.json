@@ -336,7 +336,7 @@
   ],
   "defaultOrders": [
     {
-      "id": "1",
+      "defaultOrderId":"1",
       "name":"Caprese Mania",
       "pizza": {
         "size": "Small",
@@ -363,6 +363,33 @@
       ],
       "paymentMethod": {
         "type": "Cash",
+        "details": {
+          "cardNumber": "",
+          "cardExpiryDate": "",
+          "cardCVV": ""
+        }
+      }
+    },{
+      "defaultOrderId":"2",
+      "name":"BodyBuilder",
+      "pizza": {
+        "size": "Small",
+        "pasta": "Thick",
+        "isGlutenFree": false,
+        "type": "Savory",
+        "cheese": "Mozzarella",
+        "ingredients": [
+          "Frango"
+        ]
+      },
+      "sideDishes": [
+        {
+          "id": "6",
+          "name": "Water Bottle"
+        }
+      ],
+      "paymentMethod": {
+        "type": "PayPal",
         "details": {
           "cardNumber": "",
           "cardExpiryDate": "",

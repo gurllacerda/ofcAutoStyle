@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Navbar from '@/components/navbar/Navbar';
 import { Steps, Button } from 'antd';
 import CreatePizzaForm from '@/components/createForm/CreatePizzaForm';
 import SideDishesForm from '@/components/sideDishesForm/SideDishesForm';
@@ -47,7 +46,6 @@ export default function CreatePage() {
     return (
         <>
 
-            <Navbar />
             <Steps
                 className="custom-steps"
                 current={currentStep}

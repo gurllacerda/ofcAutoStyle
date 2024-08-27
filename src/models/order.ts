@@ -5,34 +5,36 @@ import axios from 'axios';
 
 export default class Order {
     private id?: string;
-    private name?: string;
-    private pizza: Pizza ;
+    private pizza: Pizza;
     private sideDishes: SideDishes[] = [];
-    private paymentMethod: PaymentMethod ;
+    private paymentMethod: PaymentMethod;
+    private isDefaultOrder: boolean;
 
-    public constructor ( pizza: Pizza, paymentMethod: PaymentMethod, sideDishes?: SideDishes[], id?: string, name?: string) {
+    public constructor(
+        pizza: Pizza,
+        paymentMethod: PaymentMethod,
+        isDefaultOrder: boolean = false,
+        sideDishes?: SideDishes[],
+        id?: string,
+    ) {
         this.pizza = pizza;
         this.paymentMethod = paymentMethod;
-        if(sideDishes) {
+        this.isDefaultOrder = isDefaultOrder;
+
+        if (sideDishes) {
             this.sideDishes = sideDishes;
         }
-        if(id) {
+        if (id) {
             this.id = id;
         }
-        if(name){
-            this.name = name;
-        }
+        
     }
 
     public getId(): string | undefined {
         return this.id;
     }
 
-    public getName(): string | undefined {
-        return this.name;
-    }
-
-    public getPizza(): Pizza  {
+    public getPizza(): Pizza {
         return this.pizza;
     }
 
@@ -40,28 +42,33 @@ export default class Order {
         return this.sideDishes;
     }
 
-    public getPaymentMethod(): PaymentMethod  {
+    public getPaymentMethod(): PaymentMethod {
         return this.paymentMethod;
     }
 
-    addPizza (pizza: Pizza): void{
-        this.pizza = pizza;
-    } 
+    public getIsDefaultOrder(): boolean {
+        return this.isDefaultOrder;
+    }
 
-    addSideDishes (sideDishes: SideDishes[]): void {
+    addPizza(pizza: Pizza): void {
+        this.pizza = pizza;
+    }
+
+    addSideDishes(sideDishes: SideDishes[]): void {
         this.sideDishes = sideDishes;
     }
 
-    addPaymentMethod (paymentMethod: PaymentMethod): void {
+    addPaymentMethod(paymentMethod: PaymentMethod): void {
         this.paymentMethod = paymentMethod;
     }
 
-    public async save(): Promise<void>{
-        try{
+    public async save(): Promise<void> {
+        try {
             const orderData = {
                 pizza: this.pizza,
                 sideDishes: this.sideDishes,
-                paymentMethod: this.paymentMethod
+                paymentMethod: this.paymentMethod,
+                isDefaultOrder: this.isDefaultOrder
             };
 
             const response = await axios.post('http://localhost:3333/orders', orderData);
@@ -69,7 +76,7 @@ export default class Order {
 
             // Atualiza a instância com o ID retornado
             this.id = response.data.id;
-        } catch (error){
+        } catch (error) {
             console.log('Error saving order!', error);
         }
     }
@@ -83,7 +90,7 @@ export default class Order {
             const orderData = {
                 pizza: this.pizza,
                 sideDishes: this.sideDishes,
-                paymentMethod: this.paymentMethod
+                paymentMethod: this.paymentMethod,
             };
 
             const response = await axios.put(`http://localhost:3333/orders/${this.id}`, orderData);

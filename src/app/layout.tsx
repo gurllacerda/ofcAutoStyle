@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import 'antd/dist/reset.css'; // Importando o CSS do Ant Design
 import { Inter } from 'next/font/google';
 import './globals.css';
+import Navbar from '@/components/navbar/Navbar';
 
 
 const inter = Inter({ subsets: ['latin'] });
@@ -22,7 +23,11 @@ export default function RootLayout({
         {/* <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossOrigin="anonymous"></link> */}
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Navbar />
+        {children}
+        
+        </body>
     </html>
   );
 }

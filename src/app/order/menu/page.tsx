@@ -1,12 +1,14 @@
 'use client';
 
-import Navbar from '@/components/navbar/Navbar';
-import Order from '@/models/order';
+import { DefaultOrder } from '@/models/defaultOrder';
+// import Order from '@/models/order';
 import { PaymentMethod } from '@/models/paymentMethod';
 import { Pizza } from '@/models/pizza';
+import { DefaultOrderData } from '@/types/defaultOrderData';
 // import { Ingredient } from '@/types';
-import { OrderData } from '@/types/orderData';
-import { FormOutlined } from '@ant-design/icons';
+// import { OrderData } from '@/types/orderData';
+import { useOrderForm } from '@/utils/useOrderForm';
+import { CheckOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Row } from 'antd';
 import axios from 'axios';
 import React from 'react';
@@ -14,15 +16,19 @@ import { useEffect } from 'react';
 // import Slider from '@/components/slider/Slider';
 
 export default function MenuPage() {
-  const [defaultOrders, setDefaultOrders] = React.useState<Order[]>([]);
+  const [defaultOrders, setDefaultOrders] = React.useState<DefaultOrder[]>([]);
   // const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
+  const {
+    // order,
+    handleSubmit,
+} = useOrderForm();
 
   useEffect(() => {
     const getDefaultOrders = async () => {
       try {
-        const response = await axios.get<OrderData[]>('http://localhost:3333/defaultOrders');
-        const data: OrderData[] = response.data;
+        const response = await axios.get<DefaultOrderData[]>('http://localhost:3333/defaultOrders');
+        const data: DefaultOrderData[] = response.data;
 
         const orders = data.map(orderData => {
           const selectedIngredients = orderData.pizza.ingredients;
@@ -47,7 +53,7 @@ export default function MenuPage() {
             name: dish.name
           }));
 
-          return new Order(pizza, paymentMethod, sideDishes, orderData.id, orderData.name);
+          return new DefaultOrder(pizza, paymentMethod, orderData.defaultOrderId, sideDishes,  orderData.name);
         });
 
         setDefaultOrders(orders);
@@ -63,23 +69,28 @@ export default function MenuPage() {
   }, []);
 
 
+  const handleSubmitDefaultOrder = async (event: React.FormEvent) => {
+    event.preventDefault();
+    await handleSubmit(event);
+  };
+
+
 
   return (
     <>
-      <Navbar />
       <h1 className="text-center text-3xl font-bold my-6 text-orange-600">Nossos combos mais pedidos</h1>
       <Row gutter={16} className="p-4">
         {defaultOrders.map((order) => (
           <Col span={8} key={order.getId()} className="mb-4">
             <Card
-              title={`${order.getName()} - #${order.getId()}`}
+              title={`${order.getName()} - ${order.getDefaultOrderId()}`}
               bordered={false}
               className="bg-orange-100 shadow-lg border border-orange-200"
               actions={[
                 <Button
-                  type="link"
+                  htmlType="submit"
+                  onClick={handleSubmitDefaultOrder}
                   className="flex items-center justify-center text-white bg-orange-500 hover:bg-white hover:text-orange-500 border-none rounded-lg px-4 py-2 transition-transform duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
-                  href={`/order/${order.getId()}`}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -87,8 +98,8 @@ export default function MenuPage() {
                     width: '100%',
                   }}
                 >
-                  <FormOutlined className="mr-2" />
-                  <span>Editar</span>
+                  <CheckOutlined  className="mr-2" />
+                  <span>Make Order</span>
                 </Button>,
               ]}
             >
