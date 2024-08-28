@@ -336,8 +336,8 @@
   ],
   "defaultOrders": [
     {
-      "defaultOrderId":"1",
-      "name":"Caprese Mania",
+      "defaultOrderId": "1",
+      "name": "Caprese Mania",
       "pizza": {
         "size": "Small",
         "pasta": "Thick",
@@ -368,10 +368,12 @@
           "cardExpiryDate": "",
           "cardCVV": ""
         }
-      }
-    },{
-      "defaultOrderId":"2",
-      "name":"BodyBuilder",
+      },
+      "id": "1ddf"
+    },
+    {
+      "defaultOrderId": "2",
+      "name": "BodyBuilder",
       "pizza": {
         "size": "Small",
         "pasta": "Thick",
@@ -395,7 +397,8 @@
           "cardExpiryDate": "",
           "cardCVV": ""
         }
-      }
+      },
+      "id": "faf7"
     }
   ]
 }

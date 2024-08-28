@@ -12,8 +12,8 @@ export class DefaultOrder extends Order {
         paymentMethod: PaymentMethod,
         defaultOrderId: string, // Este ID é obrigatório para DefaultOrder
         sideDishes?: SideDishes[],
-        id?: string,
-        name?: string
+        name?: string,
+        id?: string
     ) {
         super(pizza, paymentMethod, true, sideDishes, id);
         this.defaultOrderId = defaultOrderId;

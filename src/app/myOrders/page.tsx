@@ -1,6 +1,5 @@
 'use client';
 
-import Navbar from '@/components/navbar/Navbar';
 import Order from '@/models/order';
 import { FormOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Row } from 'antd';
@@ -43,7 +42,7 @@ export default function OrdersPage() {
             name: dish.name
           }));
 
-          return new Order(pizza, paymentMethod, sideDishes, orderData.id);
+          return new Order(pizza, paymentMethod, false, sideDishes, orderData.id);
         });
 
         setOrders(orders);
@@ -60,7 +59,6 @@ export default function OrdersPage() {
 
   return (
     <>
-      <Navbar />
       <h1 className="text-center text-3xl font-bold my-6 text-orange-600">Minhas Ordens</h1>
       <Row gutter={16} className="p-4">
         {orders.map((order) => (

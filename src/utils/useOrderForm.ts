@@ -10,7 +10,7 @@ import { generateTemporaryId } from '@/utils/idUtils';
 import { RadioChangeEvent } from 'antd';
 import { DefaultOrder } from '@/models/defaultOrder';
 
-export function useOrderForm(initialOrder?: Order) {
+export function useOrderForm(initialOrder?: Order | DefaultOrder) {
     // Estado e lógica do hook
     const [selectedSize, setSelectedSize] = useState<'Small' | 'Medium' | 'Big'>('Small');
     const [selectedPasta, setSelectedPasta] = useState<'Thin' | 'Thick'>('Thin');
@@ -24,7 +24,7 @@ export function useOrderForm(initialOrder?: Order) {
     const [maxSides, setMaxSides] = useState<boolean>(false);
     const [isCard, setIsCard] = useState<boolean>(false);
     const [currentStep, setCurrentStep] = useState<number>(0);
-    const [order, setOrder] = useState<Order | null | DefaultOrder>(initialOrder || null);
+    const [order, setOrder] = useState<Order | DefaultOrder | null>(initialOrder || null);
     const [cardDetails, setCardDetails] = useState<{
         cardNumber?: string;
         cardExpiryDate?: string;
@@ -56,10 +56,15 @@ export function useOrderForm(initialOrder?: Order) {
 
 
         useEffect(() => {
-        if(initialOrder !== undefined){
+        if(initialOrder !== undefined && initialOrder !== null){
+            console.log('não é null ou undefined');
                     setOrder(initialOrder);
+                } else {
+                    console.log('é null ou undefined');
                 }
         }, [initialOrder]);
+
+
        
         useEffect(() => {
                 if(order){
@@ -92,18 +97,21 @@ export function useOrderForm(initialOrder?: Order) {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        console.log(initialOrder);
         console.log('Submitting order');
         console.log(order);
 
         if (order) {
             console.log('entrou para salvar');
             try {
-                if (order.getId()) {
+                if (order.getId() && !order.getIsDefaultOrder()) {
+                    console.log('entrou update');
                     await order.update();
-                    console.log('Order updated successfully');
+                    // console.log('Order updated successfully');
                 } else {
+                    console.log('entrou para o save');
                     await order.save();
-                    console.log('Order saved successfully');
+                    // console.log('Order saved successfully');
                 }
                 router.push('/');
             } catch (error) {

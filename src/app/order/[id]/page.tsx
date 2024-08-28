@@ -46,7 +46,7 @@ export default function EditOrderPage() {
 
                 const sideDishes = data.sideDishes.map(dish => new SideDishes(dish.id, dish.name));
 
-                setInitialOrder(new Order(pizza, paymentMethod, sideDishes, data.id));
+                setInitialOrder(new Order(pizza, paymentMethod, false, sideDishes, data.id));
             } catch (error) {
                 console.error('Failed to fetch order:', error);
             }

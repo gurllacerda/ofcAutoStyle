@@ -5,24 +5,25 @@ import { DefaultOrder } from '@/models/defaultOrder';
 import { PaymentMethod } from '@/models/paymentMethod';
 import { Pizza } from '@/models/pizza';
 import { DefaultOrderData } from '@/types/defaultOrderData';
+import { generateTemporaryId } from '@/utils/idUtils';
 // import { Ingredient } from '@/types';
 // import { OrderData } from '@/types/orderData';
 import { useOrderForm } from '@/utils/useOrderForm';
 import { CheckOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Row } from 'antd';
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 // import Slider from '@/components/slider/Slider';
 
 export default function MenuPage() {
   const [defaultOrders, setDefaultOrders] = React.useState<DefaultOrder[]>([]);
+  const [selectedOrder, setSelectedOrder] = useState<DefaultOrder | null>(null);
   // const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
-  const {
-    // order,
-    handleSubmit,
-} = useOrderForm();
+  const { handleSubmit } = useOrderForm(selectedOrder ?? undefined);
+
+
 
   useEffect(() => {
     const getDefaultOrders = async () => {
@@ -31,8 +32,6 @@ export default function MenuPage() {
         const data: DefaultOrderData[] = response.data;
 
         const orders = data.map(orderData => {
-          const selectedIngredients = orderData.pizza.ingredients;
-          console.log(selectedIngredients);
           const pizza = new Pizza(
             orderData.pizza.id,
             orderData.pizza.size,
@@ -53,8 +52,11 @@ export default function MenuPage() {
             name: dish.name
           }));
 
-          return new DefaultOrder(pizza, paymentMethod, orderData.defaultOrderId, sideDishes,  orderData.name);
+          console.log(new DefaultOrder(pizza, paymentMethod, orderData.defaultOrderId, sideDishes, orderData.name, generateTemporaryId()));
+
+          return new DefaultOrder(pizza, paymentMethod, orderData.defaultOrderId, sideDishes, orderData.name, generateTemporaryId());
         });
+        // console.log(orders);
 
         setDefaultOrders(orders);
       } catch (error) {
@@ -68,13 +70,24 @@ export default function MenuPage() {
     getDefaultOrders();
   }, []);
 
-
-  const handleSubmitDefaultOrder = async (event: React.FormEvent) => {
-    event.preventDefault();
-    await handleSubmit(event);
+  const handleOrderSelect = (order: DefaultOrder) => {
+    console.log(order);
+    setSelectedOrder(order);
+    // await handleSubmit(order);
   };
 
-
+  //   const handleSubmitDefaultOrder = async () => {
+  //     if (selectedOrder) {
+  //         try {
+  //             await handleSubmit(selectedOrder); // Chama a função de submissão sem passar um evento
+  //             console.log('Ordem enviada com sucesso');
+  //         } catch (error) {
+  //             console.error('Falha ao enviar a ordem:', error);
+  //         }
+  //     } else {
+  //         console.log('Nenhuma ordem selecionada');
+  //     }
+  // };
 
   return (
     <>
@@ -87,30 +100,35 @@ export default function MenuPage() {
               bordered={false}
               className="bg-orange-100 shadow-lg border border-orange-200"
               actions={[
-                <Button
-                  htmlType="submit"
-                  onClick={handleSubmitDefaultOrder}
-                  className="flex items-center justify-center text-white bg-orange-500 hover:bg-white hover:text-orange-500 border-none rounded-lg px-4 py-2 transition-transform duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '100%',
-                  }}
-                >
-                  <CheckOutlined  className="mr-2" />
-                  <span>Make Order</span>
-                </Button>,
+                <form onSubmit={handleSubmit}>
+                  <Button
+                    htmlType='submit'
+                    onClick={(() => handleOrderSelect(order))}
+                    className="flex items-center justify-center text-white bg-orange-500 hover:bg-white hover:text-orange-500 border-none rounded-lg px-4 py-2 transition-transform duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '100%',
+                    }}
+                  >
+                    <CheckOutlined className="mr-2" />
+                    <span>Selecionar Pedido</span>
+                  </Button>,
+                </form>
+
               ]}
             >
-              <p><strong className="text-orange-700">Pizza:</strong> {order.getPizza() ? order.getPizza().type : 'None'}</p>
-              <p><strong className="text-orange-700">Ingredientes:</strong> {order.getPizza().ingredients.join(', ') || 'None'}</p>
-              <p><strong className="text-orange-700">Acompanhamentos:</strong> {order.getSideDishes().map(dish => dish.name).join(', ') || 'None'}</p>
-              <p><strong className="text-orange-700">Método de Pagamento:</strong> {order.getPaymentMethod() ? order.getPaymentMethod().type : 'Not Selected'}</p>
+              <p><strong className="text-orange-700">Pizza:</strong> {order.getPizza() ? order.getPizza().type : 'Nenhuma'}</p>
+              <p><strong className="text-orange-700">Ingredientes:</strong> {order.getPizza().ingredients.join(', ') || 'Nenhum'}</p>
+              <p><strong className="text-orange-700">Acompanhamentos:</strong> {order.getSideDishes().map(dish => dish.name).join(', ') || 'Nenhum'}</p>
+              <p><strong className="text-orange-700">Método de Pagamento:</strong> {order.getPaymentMethod() ? order.getPaymentMethod().type : 'Não Selecionado'}</p>
             </Card>
           </Col>
         ))}
       </Row>
+      <CheckOutlined className="mr-2" />
+      <span>Enviar Pedido Selecionado</span>
     </>
   );
 }
