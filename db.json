@@ -133,205 +133,95 @@
   ],
   "orders": [
     {
-      "id": "bbea",
+      "id": "d2da",
       "pizza": {
-        "id": "temp_syzirt8p6",
         "size": "Small",
         "pasta": "Thick",
         "isGlutenFree": false,
         "type": "Savory",
         "cheese": "Mozzarella",
         "ingredients": [
-          "Frango",
-          "Tomate Seco",
-          "Salmão fumado",
-          "Atum"
+          "Frango"
         ]
       },
       "sideDishes": [
         {
           "id": "6",
           "name": "Water Bottle"
-        },
-        {
-          "id": "5",
-          "name": "Orange Juice"
-        }
-      ],
-      "paymentMethod": {
-        "type": "Cash",
-        "details": {
-          "cardNumber": "",
-          "cardExpiryDate": "",
-          "cardCVV": ""
-        }
-      }
-    },
-    {
-      "id": "3c20",
-      "pizza": {
-        "id": "temp_syzirt8p6",
-        "size": "Small",
-        "pasta": "Thick",
-        "isGlutenFree": false,
-        "type": "Savory",
-        "cheese": "Mozzarella",
-        "ingredients": [
-          "Frango",
-          "Tomate Seco",
-          "Salmão fumado",
-          "Atum"
-        ]
-      },
-      "sideDishes": [
-        {
-          "id": "6",
-          "name": "Water Bottle"
-        },
-        {
-          "id": "5",
-          "name": "Orange Juice"
-        }
-      ],
-      "paymentMethod": {
-        "type": "Cash",
-        "details": {
-          "cardNumber": "",
-          "cardExpiryDate": "",
-          "cardCVV": ""
-        }
-      }
-    },
-    {
-      "id": "600d",
-      "pizza": {
-        "id": "temp_donajmtni",
-        "size": "Small",
-        "pasta": "Thin",
-        "isGlutenFree": true,
-        "type": "Sweet",
-        "cheese": "Mozzarella",
-        "ingredients": [
-          "Beringela",
-          "Cebola branca",
-          "Cogumelos Paris",
-          "Manjericão"
-        ]
-      },
-      "sideDishes": [
-        {
-          "id": "6",
-          "name": "Water Bottle"
-        },
-        {
-          "id": "5",
-          "name": "Orange Juice"
-        }
-      ],
-      "paymentMethod": {
-        "type": "Cash",
-        "details": {
-          "cardNumber": "",
-          "cardExpiryDate": "",
-          "cardCVV": ""
-        }
-      }
-    },
-    {
-      "id": "571c",
-      "pizza": {
-        "id": "temp_acdkr1y6r",
-        "size": "Small",
-        "pasta": "Thick",
-        "isGlutenFree": true,
-        "type": "Sweet",
-        "cheese": "Mozzarella",
-        "ingredients": [
-          "Beringela",
-          "Cebola branca",
-          "Cogumelos Paris",
-          "Manjericão"
-        ]
-      },
-      "sideDishes": [
-        {
-          "id": "5",
-          "name": "Orange Juice"
-        },
-        {
-          "id": "6",
-          "name": "Water Bottle"
-        }
-      ],
-      "paymentMethod": {
-        "type": "Cash",
-        "details": {
-          "cardNumber": "",
-          "cardExpiryDate": "",
-          "cardCVV": ""
-        }
-      }
-    },
-    {
-      "pizza": {
-        "id": "temp_v9j8rr2j6",
-        "size": "Small",
-        "pasta": "Thick",
-        "isGlutenFree": false,
-        "type": "Savory",
-        "cheese": "Mozzarella",
-        "ingredients": [
-          "Frango",
-          "Manjericão",
-          "Bacon",
-          "Fiambre"
-        ]
-      },
-      "sideDishes": [
-        {
-          "id": "5",
-          "name": "Orange Juice"
-        },
-        {
-          "id": "2",
-          "name": "Large fries"
-        }
-      ],
-      "paymentMethod": {
-        "type": "Cash",
-        "details": {}
-      },
-      "id": "276c"
-    },
-    {
-      "pizza": {
-        "id": "temp_4vd3zfido",
-        "size": "Big",
-        "pasta": "Thick",
-        "isGlutenFree": true,
-        "type": "Sweet",
-        "cheese": "Buffalo mozzarella",
-        "ingredients": [
-          "Frango",
-          "Tomate Seco",
-          "Camarão"
-        ]
-      },
-      "sideDishes": [
-        {
-          "id": "2",
-          "name": "Large fries"
-        },
-        {
-          "id": "3",
-          "name": "Home fries"
         }
       ],
       "paymentMethod": {
         "type": "PayPal",
-        "details": {}
+        "details": {
+          "cardNumber": "",
+          "cardExpiryDate": "",
+          "cardCVV": ""
+        }
       },
-      "id": "94d8"
+      "isDefaultOrder": true
+    },
+    {
+      "id": "68b7",
+      "pizza": {
+        "size": "Small",
+        "pasta": "Thick",
+        "isGlutenFree": false,
+        "type": "Savory",
+        "cheese": "Mozzarella",
+        "ingredients": [
+          "Frango"
+        ]
+      },
+      "sideDishes": [
+        {
+          "id": "6",
+          "name": "Water Bottle"
+        }
+      ],
+      "paymentMethod": {
+        "type": "PayPal",
+        "details": {
+          "cardNumber": "",
+          "cardExpiryDate": "",
+          "cardCVV": ""
+        }
+      },
+      "isDefaultOrder": true
+    },
+    {
+      "id": "c930",
+      "pizza": {
+        "size": "Small",
+        "pasta": "Thick",
+        "isGlutenFree": false,
+        "type": "Savory",
+        "cheese": "Mozzarella",
+        "ingredients": [
+          "Frango",
+          "Tomate Seco",
+          "Salmão fumado",
+          "Atum"
+        ]
+      },
+      "sideDishes": [
+        {
+          "id": "6",
+          "name": "Water Bottle"
+        },
+        {
+          "id": "5",
+          "name": "Orange Juice"
+        }
+      ],
+      "paymentMethod": {
+        "type": "Cash",
+        "details": {
+          "cardNumber": "",
+          "cardExpiryDate": "",
+          "cardCVV": ""
+        }
+      },
+      "isDefaultOrder": true
     }
   ],
   "defaultOrders": [

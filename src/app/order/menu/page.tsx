@@ -1,29 +1,21 @@
 'use client';
 
 import { DefaultOrder } from '@/models/defaultOrder';
-// import Order from '@/models/order';
 import { PaymentMethod } from '@/models/paymentMethod';
 import { Pizza } from '@/models/pizza';
 import { DefaultOrderData } from '@/types/defaultOrderData';
 import { generateTemporaryId } from '@/utils/idUtils';
-// import { Ingredient } from '@/types';
-// import { OrderData } from '@/types/orderData';
 import { useOrderForm } from '@/utils/useOrderForm';
-import { CheckOutlined } from '@ant-design/icons';
+import { CheckOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Row } from 'antd';
 import axios from 'axios';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-// import Slider from '@/components/slider/Slider';
+import React, { useState, useEffect } from 'react';
 
 export default function MenuPage() {
   const [defaultOrders, setDefaultOrders] = React.useState<DefaultOrder[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<DefaultOrder | null>(null);
-  // const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
   const { handleSubmit } = useOrderForm(selectedOrder ?? undefined);
-
-
 
   useEffect(() => {
     const getDefaultOrders = async () => {
@@ -52,11 +44,8 @@ export default function MenuPage() {
             name: dish.name
           }));
 
-          console.log(new DefaultOrder(pizza, paymentMethod, orderData.defaultOrderId, sideDishes, orderData.name, generateTemporaryId()));
-
           return new DefaultOrder(pizza, paymentMethod, orderData.defaultOrderId, sideDishes, orderData.name, generateTemporaryId());
         });
-        // console.log(orders);
 
         setDefaultOrders(orders);
       } catch (error) {
@@ -64,71 +53,84 @@ export default function MenuPage() {
       }
     };
 
-    // setIngredients(def)
-
-    console.log(defaultOrders);
     getDefaultOrders();
   }, []);
 
   const handleOrderSelect = (order: DefaultOrder) => {
-    console.log(order);
     setSelectedOrder(order);
-    // await handleSubmit(order);
   };
 
-  //   const handleSubmitDefaultOrder = async () => {
-  //     if (selectedOrder) {
-  //         try {
-  //             await handleSubmit(selectedOrder); // Chama a função de submissão sem passar um evento
-  //             console.log('Ordem enviada com sucesso');
-  //         } catch (error) {
-  //             console.error('Falha ao enviar a ordem:', error);
-  //         }
-  //     } else {
-  //         console.log('Nenhuma ordem selecionada');
-  //     }
-  // };
+
 
   return (
     <>
-      <h1 className="text-center text-3xl font-bold my-6 text-orange-600">Nossos combos mais pedidos</h1>
-      <Row gutter={16} className="p-4">
+      <h1 className="text-center text-4xl font-extrabold my-8 text-orange-600">Nossos Combos Mais Pedidos</h1>
+      <Row gutter={24} className="p-4">
         {defaultOrders.map((order) => (
-          <Col span={8} key={order.getId()} className="mb-4">
+          <Col span={8} key={order.getId()} className="mb-6">
             <Card
-              title={`${order.getName()} - ${order.getDefaultOrderId()}`}
+              title={<span className="text-orange-700 text-lg font-bold">{`${order.getName() ?? 'Combo'} - ${order.getDefaultOrderId()}`}</span>}
               bordered={false}
-              className="bg-orange-100 shadow-lg border border-orange-200"
+              className={`bg-white shadow-xl rounded-lg transition-transform duration-300 transform hover:scale-105 hover:shadow-2xl ${selectedOrder === order ? 'border-2 border-orange-500' : 'border border-gray-300'
+                }`}
               actions={[
-                <form onSubmit={handleSubmit}>
+                !selectedOrder || selectedOrder !== order ? (
                   <Button
-                    htmlType='submit'
-                    onClick={(() => handleOrderSelect(order))}
-                    className="flex items-center justify-center text-white bg-orange-500 hover:bg-white hover:text-orange-500 border-none rounded-lg px-4 py-2 transition-transform duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+                    onClick={() => handleOrderSelect(order)}
+                    className="w-full text-white bg-orange-500 hover:bg-orange-600 border-none rounded-lg py-2 text-lg transition duration-300"
                     style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '100%',
+                      backgroundColor: '#f97316',
+                      borderColor: 'transparent',
+                      color: '#fff',
                     }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#ea580c')}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#f97316')}
                   >
                     <CheckOutlined className="mr-2" />
-                    <span>Selecionar Pedido</span>
-                  </Button>,
-                </form>
-
+                    Selecionar Pedido
+                  </Button>
+                ) : (
+                  <div className="flex space-x-4">
+                    <Button
+                      onClick={() => setSelectedOrder(null)}
+                      className="w-1/2 bg-gray-200 text-gray-700 border-none rounded-lg py-1 text-base transition duration-300 custom-button"
+                      style={{
+                        backgroundColor: '#e5e7eb',
+                        color: '#374151',
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#d1d5db')}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#e5e7eb')}
+                    >
+                      <ArrowLeftOutlined className="mr-2" />
+                      Voltar
+                    </Button>
+                    <Button
+                      htmlType="submit"
+                      onClick={handleSubmit}
+                      className="w-1/2 bg-orange-500 text-white border-none rounded-lg py-1 text-base transition duration-300 ml-2 custom-button"
+                      style={{
+                        backgroundColor: '#f97316',
+                        borderColor: 'transparent',
+                        color: '#fff',
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#ea580c')}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#f97316')}
+                    >
+                      <CheckOutlined className="mr-2" />
+                      Fazer Pedido
+                    </Button>
+                  </div>
+                ),
               ]}
             >
-              <p><strong className="text-orange-700">Pizza:</strong> {order.getPizza() ? order.getPizza().type : 'Nenhuma'}</p>
+              <p><strong className="text-orange-700">Pizza:</strong> {order.getPizza()?.type || 'Nenhuma'}</p>
               <p><strong className="text-orange-700">Ingredientes:</strong> {order.getPizza().ingredients.join(', ') || 'Nenhum'}</p>
               <p><strong className="text-orange-700">Acompanhamentos:</strong> {order.getSideDishes().map(dish => dish.name).join(', ') || 'Nenhum'}</p>
-              <p><strong className="text-orange-700">Método de Pagamento:</strong> {order.getPaymentMethod() ? order.getPaymentMethod().type : 'Não Selecionado'}</p>
+              <p><strong className="text-orange-700">Método de Pagamento:</strong> {order.getPaymentMethod()?.type || 'Não Selecionado'}</p>
             </Card>
           </Col>
         ))}
       </Row>
-      <CheckOutlined className="mr-2" />
-      <span>Enviar Pedido Selecionado</span>
     </>
   );
 }
