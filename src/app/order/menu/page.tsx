@@ -64,7 +64,11 @@ export default function MenuPage() {
 
   return (
     <>
-      <h1 className="text-center text-4xl font-extrabold my-8 text-orange-600">Nossos Combos Mais Pedidos</h1>
+      <div className="flex justify-center items-center my-8">
+        <h1 className="text-center text-4xl font-extrabold bg-gradient-to-r from-orange-500 to-orange-600 text-white py-4 px-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl">
+          Nossos Combos Mais Pedidos
+        </h1>
+      </div>
       <Row gutter={24} className="p-4">
         {defaultOrders.map((order) => (
           <Col span={8} key={order.getId()} className="mb-6">

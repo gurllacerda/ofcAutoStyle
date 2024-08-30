@@ -59,14 +59,18 @@ export default function OrdersPage() {
 
   return (
     <>
-      <h1 className="text-center text-3xl font-bold my-6 text-orange-600">Minhas Ordens</h1>
+      <div className="flex justify-center items-center my-8">
+        <h1 className="text-center text-4xl font-extrabold bg-gradient-to-r from-orange-500 to-orange-600 text-white py-4 px-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl">
+          My Orders
+        </h1>
+      </div>
       <Row gutter={16} className="p-4">
         {orders.map((order) => (
           <Col span={8} key={order.getId()} className="mb-4">
             <Card
               title={`Order #${order.getId()}`}
               bordered={false}
-              className="bg-white shadow-lg border border-gray-200"
+              className="bg-white shadow-lg border border-gray-200 transition-transform duration-300 transform hover:scale-105"
               actions={[
                 <Button
                   type="link"
@@ -79,6 +83,7 @@ export default function OrdersPage() {
               ]}
             >
               <p><strong className="text-orange-600">Pizza:</strong> {order.getPizza() ? order.getPizza().type : 'None'}</p>
+              <p><strong className="text-orange-600">Ingredientes:</strong> {order.getPizza().ingredients.join(', ') || 'Nenhum'}</p>
               <p><strong className="text-orange-600">Side Dishes:</strong> {order.getSideDishes().map(dish => dish.name).join(', ') || 'None'}</p>
               <p><strong className="text-orange-600">Payment Method:</strong> {order.getPaymentMethod() ? order.getPaymentMethod().type : 'Not Selected'}</p>
             </Card>
